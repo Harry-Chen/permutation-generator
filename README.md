@@ -1,6 +1,6 @@
-# Permutation generation
+# Permutation calculator
 
-This repo implements the following four permutation generation methods (and their related intermediate number):
+This repo implements the following four permutation generating methods (and their related intermediate number) to calculate the permutation after / before a given one in:
 
 * lexicographical order (with incremental-based number as intermediate number)
 * incremental-based number order (with incremental-based number as intermediate number)
