@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from intermediate_number import IncrementalBasedNumber, DecrementalBasedNumber
+from intermediate_number import *
 from permutation_mapping import *
 
 mapping_list = [
@@ -13,16 +13,31 @@ mapping_list = [
 if __name__ == '__main__':
 
     for mapping, number in mapping_list:
-        print(mapping.__name__, number.__name__)
+        print(f'Use {mapping.__name__} with {number.__name__}')
+
+        # the original permutation
         orig = 83674521
         a = mapping.from_permutation(orig)
-        print(orig, a)
+        print(f'Original:\t{orig}\t{a}')
 
+        # the delta from intermediate number of the original permutation
         sub = 2020
-        b = number(sub, 8, True)
-        print(sub, b)
+        b = number(sub, len(str(orig)), True)
+        print(f'Delta:\t\t{sub}\t\t{b}')
 
-        c = a - b
-        perm = mapping.to_permutation(c)
-        print(perm, c)
+        # the calculated permutation from original +/- delta
+        try:
+            c = a - b
+            perm = mapping.to_permutation(c)
+        except:
+            c = 'underflow'
+            perm = 'underflow'
+        print(f'Sub:\t\t{perm}\t{c}')
+        try:
+            d = a + b
+            perm = mapping.to_permutation(d)
+        except:
+            d = 'overflow'
+            perm = 'overflow'
+        print(f'Add:\t\t{perm}\t{d}')
         print()
