@@ -126,6 +126,7 @@ class SJTMapping(PermutationMapping):
     def _from_perm(numbers: List[int]) -> IntermediateNumber:
         num_count = len(numbers)
         intermediate = [0] * (num_count - 1)
+        directions = [False] * (num_count - 1)
         for i in range(num_count - 1):
             target = i + 2
             direction = False # default to left
@@ -138,7 +139,8 @@ class SJTMapping(PermutationMapping):
                 intermediate[i] = len([i for i in numbers[pos + 1:] if i < target])
             else: # look left
                 intermediate[i] = len([i for i in numbers[:pos] if i < target])
-        return DecrementalBasedNumber(intermediate, len(numbers))
+            directions[i] = direction
+        return DirectionalDecrementalBasedNumber(intermediate, directions, len(numbers))
 
     @staticmethod
     def _to_perm(intermediate: IntermediateNumber) -> List[int]:

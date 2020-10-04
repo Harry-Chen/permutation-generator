@@ -23,6 +23,6 @@ if __name__ == '__main__':
         print(sub, b)
 
         c = a - b
-        perm = (mapping.to_permutation(c))
+        perm = mapping.to_permutation(c)
         print(perm, c)
         print()

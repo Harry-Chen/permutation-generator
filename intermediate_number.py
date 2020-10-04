@@ -26,23 +26,24 @@ class IntermediateNumber(ABC):
             self.numbers = [0] * (digits - 1 - len(self.numbers)) + self.numbers
     
     def __str__(self):
-        return f'{self.__class__.__name__[:3]}({"".join(map(str, self.numbers))})'
+        return f'{self.__class__.__name__[:3]}({"".join(map(str, self.numbers))}){self.custom_str()}'
 
     # no actual checking now
     def check(self, number: List[int]) -> bool:
         return True
 
     def __add__(self, rhs: IntermediateNumber):
-        assert isinstance(rhs, IntermediateNumber)
-        assert type(self) == type(rhs)
+        assert isinstance(self, rhs.__class__)
         return self.add(rhs)
 
     def __sub__(self, rhs: IntermediateNumber):
-        assert isinstance(rhs, IntermediateNumber)
-        assert type(self) == type(rhs)
+        assert isinstance(self, rhs.__class__)
         assert self.to_natural() >= rhs.to_natural()
         return self.sub(rhs)
     
+    def custom_str(self) -> str:
+        return ''
+
     # generate from natural number
     @abstractmethod
     def from_natural(self, natural: int) -> List[int]:
@@ -126,3 +127,15 @@ class DecrementalBasedNumber(IntermediateNumber):
     
     def sub(self, rhs: DecrementalBasedNumber):
         return DecrementalBasedNumber(self.to_natural() - rhs.to_natural(), self.digits, True)
+
+
+class DirectionalDecrementalBasedNumber(DecrementalBasedNumber):
+
+    direction: List[bool]
+
+    def __init__(self, numbers: Union[List[int], int], direction: List[bool], digits = 9, from_natural: bool = False):
+        super(DirectionalDecrementalBasedNumber, self).__init__(numbers, digits, from_natural)
+        self.direction = direction
+
+    def custom_str(self) -> str:
+        return f'({"".join(map(lambda d: "R" if d else "L", self.direction))})'
