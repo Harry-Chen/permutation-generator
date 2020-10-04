@@ -7,7 +7,7 @@ mapping_list = [
     (LexicographicalMapping, IncrementalBasedNumber),
     (IncrementalBasedMapping, IncrementalBasedNumber),
     (DecrementalBasedMapping, DecrementalBasedNumber),
-    (LexicographicalMapping, IncrementalBasedNumber)
+    (SJTMapping, DecrementalBasedNumber)
 ]
 
 if __name__ == '__main__':
@@ -25,3 +25,4 @@ if __name__ == '__main__':
         c = a - b
         perm = (mapping.to_permutation(c))
         print(perm, c)
+        print()
